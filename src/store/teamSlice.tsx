@@ -9,13 +9,13 @@ const initialState: TeamState = {
   value: [],
 };
 
-export const addTeamSlice = createSlice({
-  name: "addTeam",
+export const teamSlice = createSlice({
+  name: "teamSlice",
   initialState,
   reducers: {
     addTeam: (state, action: PayloadAction<string>) => {
       state.value.push({
-        teamId: 0,
+        teamId: state.value.length,
         team: action.payload,
         played: 0,
         win: 0,
@@ -28,6 +28,6 @@ export const addTeamSlice = createSlice({
   },
 });
 
-export const { addTeam } = addTeamSlice.actions;
+export const { addTeam } = teamSlice.actions;
 
-export default addTeamSlice.reducer;
+export default teamSlice.reducer;

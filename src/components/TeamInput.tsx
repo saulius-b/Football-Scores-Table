@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTeam } from "../store/addTeamSlice";
+import { addTeam } from "../store/teamSlice";
 
 export function TeamInput() {
   const [team, setTeam] = useState("");

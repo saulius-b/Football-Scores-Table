@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import addTeamReducer from "./addTeamSlice";
+import addTeamReducer from "./teamSlice";
+import updateScoreReducer from "./matchSlice";
 
 export const store = configureStore({
   reducer: {
     addTeam: addTeamReducer,
+    updateScore: updateScoreReducer,
   },
 });
 

@@ -16,9 +16,12 @@ export function ScoreTable() {
     "Points",
   ];
 
-  const tableHeader = headersText.map((item) => {
+  const tableHeader = headersText.map((item, index) => {
     return (
-      <th className="px-2 sm:px-4 font-semibold border border-gray-400">
+      <th
+        key={index}
+        className="px-2 sm:px-4 font-semibold border border-gray-400"
+      >
         {item}
       </th>
     );
@@ -26,7 +29,7 @@ export function ScoreTable() {
 
   const tableRow = tableData.map((item, index) => {
     return (
-      <tr>
+      <tr key={index}>
         <td className="border border-gray-400">{index + 1}</td>
         <td className="border border-gray-400">{item.team}</td>
         <td className="border border-gray-400">{item.played}</td>

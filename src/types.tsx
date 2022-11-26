@@ -10,3 +10,10 @@ export interface RowData {
 }
 
 export type TableData = RowData[];
+
+export interface MatchData {
+  teamId: number;
+  pointsScored: number;
+}
+
+export type Matches = MatchData[];
