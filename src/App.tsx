@@ -5,7 +5,7 @@ import { ScoreInput } from "./components/ScoreInput";
 
 function App() {
   return (
-    <div className="bg-slate-100">
+    <div className="h-96 mx-auto max-w-3xl px-4 py-6 my-10 sm:rounded sm:border sm:border-black text-xs">
       <TeamInput></TeamInput>
       <ScoreTable></ScoreTable>
       <ScoreInput></ScoreInput>
