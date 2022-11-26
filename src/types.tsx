@@ -1,5 +1,6 @@
 export interface RowData {
   place: number;
+  teamId: number;
   team: string;
   played: number;
   win: number;

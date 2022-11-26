@@ -5,6 +5,7 @@ export function ScoreTable() {
   const tableData: TableData = [
     {
       place: 1,
+      teamId: 1,
       team: "Greece",
       played: 1,
       win: 1,
@@ -15,6 +16,7 @@ export function ScoreTable() {
     },
     {
       place: 2,
+      teamId: 2,
       team: "Lithuania",
       played: 2,
       win: 2,
