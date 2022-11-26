@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RowData } from "../types";
 
 interface TeamState {
-  value: string[];
+  value: RowData[];
 }
 
 const initialState: TeamState = {
@@ -13,7 +14,16 @@ export const addTeamSlice = createSlice({
   initialState,
   reducers: {
     addTeam: (state, action: PayloadAction<string>) => {
-      state.value.push(action.payload);
+      state.value.push({
+        teamId: 0,
+        team: action.payload,
+        played: 0,
+        win: 0,
+        draw: 0,
+        lost: 0,
+        points: 0,
+        isHomeTeam: false,
+      });
     },
   },
 });

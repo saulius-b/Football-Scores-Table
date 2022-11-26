@@ -1,31 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { TableData } from "../types";
+import type { RootState } from "../store/store";
 
 export function ScoreTable() {
-  const tableData: TableData = [
-    {
-      place: 1,
-      teamId: 1,
-      team: "Greece",
-      played: 1,
-      win: 1,
-      draw: 1,
-      lost: 1,
-      points: 1,
-      isHomeTeam: true,
-    },
-    {
-      place: 2,
-      teamId: 2,
-      team: "Lithuania",
-      played: 2,
-      win: 2,
-      draw: 2,
-      lost: 2,
-      points: 2,
-      isHomeTeam: true,
-    },
-  ];
+  const tableData = useSelector((state: RootState) => state.addTeam.value);
 
   const headersText: string[] = [
     "Place",
@@ -45,10 +24,10 @@ export function ScoreTable() {
     );
   });
 
-  const tableRow = tableData.map((item) => {
+  const tableRow = tableData.map((item, index) => {
     return (
       <tr>
-        <td className="border border-gray-400">{item.place}</td>
+        <td className="border border-gray-400">{index + 1}</td>
         <td className="border border-gray-400">{item.team}</td>
         <td className="border border-gray-400">{item.played}</td>
         <td className="border border-gray-400">{item.win}</td>
