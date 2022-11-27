@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { addScores } from "../store/teamSlice";
 
 export function ScoreInput() {
   const dispatch = useDispatch();
@@ -19,12 +20,13 @@ export function ScoreInput() {
             className="border border-gray-400 rounded w-6 text-center"
             type={"number"}
             onChange={(event) => {
-              // dispatch(
-              //   updateScore({
-              //     teamId: team1.teamId,
-              //     pointsScored: parseInt(event.target.value),
-              //   })
-              // );
+              dispatch(
+                addScores({
+                  team: item[0],
+                  pointsScored: parseInt(event.target.value),
+                  matchId: index,
+                })
+              );
             }}
           ></input>
         </div>
@@ -34,12 +36,16 @@ export function ScoreInput() {
             className="border border-gray-400 rounded w-6 text-center"
             type={"text"}
             onChange={(event) => {
-              // dispatch(
-              //   updateScore({
-              //     teamId: team2.teamId,
-              //     pointsScored: parseInt(event.target.value),
-              //   })
-              // );
+              dispatch(
+                addScores({
+                  team: item[1],
+                  pointsScored:
+                    event.target.value === ""
+                      ? 0
+                      : parseInt(event.target.value),
+                  matchId: index,
+                })
+              );
             }}
           ></input>
           <div>{item[1]}</div>
