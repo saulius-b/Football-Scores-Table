@@ -23,7 +23,10 @@ export function ScoreInput() {
               dispatch(
                 addScores({
                   team: item[0],
-                  pointsScored: parseInt(event.target.value),
+                  pointsScored:
+                    event.target.value === ""
+                      ? 0
+                      : parseInt(event.target.value),
                   matchId: index,
                 })
               );
