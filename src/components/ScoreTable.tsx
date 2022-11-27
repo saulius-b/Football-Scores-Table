@@ -1,11 +1,4 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { TableData } from "../types";
-import type { RootState } from "../store/store";
-
 export function ScoreTable() {
-  const tableData = useSelector((state: RootState) => state.addTeam.value);
-
   const headersText: string[] = [
     "Place",
     "Team",
@@ -27,19 +20,19 @@ export function ScoreTable() {
     );
   });
 
-  const tableRow = tableData.map((item, index) => {
-    return (
-      <tr key={index}>
-        <td className="border border-gray-400">{index + 1}</td>
-        <td className="border border-gray-400">{item.team}</td>
-        <td className="border border-gray-400">{item.played}</td>
-        <td className="border border-gray-400">{item.win}</td>
-        <td className="border border-gray-400">{item.draw}</td>
-        <td className="border border-gray-400">{item.lost}</td>
-        <td className="border border-gray-400">{item.points}</td>
-      </tr>
-    );
-  });
+  // const tableRow = tableData.map((item, index) => {
+  //   return (
+  //     <tr key={index}>
+  //       <td className="border border-gray-400">{index + 1}</td>
+  //       <td className="border border-gray-400">{item.team}</td>
+  //       <td className="border border-gray-400">{item.played}</td>
+  //       <td className="border border-gray-400">{item.win}</td>
+  //       <td className="border border-gray-400">{item.draw}</td>
+  //       <td className="border border-gray-400">{item.lost}</td>
+  //       <td className="border border-gray-400">{item.points}</td>
+  //     </tr>
+  //   );
+  // });
 
   return (
     <div className="pb-6">
@@ -47,7 +40,7 @@ export function ScoreTable() {
         <thead className="text-xs">
           <tr className="bg-gray-200">{tableHeader}</tr>
         </thead>
-        <tbody className="text-xs">{tableRow}</tbody>
+        <tbody className="text-xs"></tbody>
       </table>
     </div>
   );
