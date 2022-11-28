@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface TeamMatches {
+interface AllMatches {
   team: string;
   pointsScored: number;
   matchId: number;
@@ -15,69 +15,78 @@ interface TeamScores {
   points: number;
 }
 
+interface MatchResults {
+  matchId: number;
+  results: {
+    team1: TeamScores;
+    team2: TeamScores;
+  };
+}
+
 interface TeamState {
   teams: string[];
-  teamMatches: TeamMatches[];
-  teamScores: TeamScores[];
+  allMatches: AllMatches[];
+  matchResults: MatchResults[];
 }
 
 const initialState: TeamState = {
   teams: [],
-  teamMatches: [],
-  teamScores: [],
+  allMatches: [],
+  matchResults: [],
 };
 
-export const teamSlice = createSlice({
-  name: "teamSlice",
+export const footballScoreSlice = createSlice({
+  name: "footballScoreSlice",
   initialState,
   reducers: {
     addTeam: (state, action: PayloadAction<string>) => {
       state.teams.push(action.payload);
     },
-    addMatches: (state, action: PayloadAction<TeamMatches>) => {
+    addMatch: (state, action: PayloadAction<AllMatches>) => {
       //Checking if the same match already had scores entered and updating them (comparing current(store) entries and incoming payload matchId and Team )
-      const selectSameMatchChanges = state.teamMatches.find(
-        (match) =>
-          match.matchId === action.payload.matchId &&
-          match.team === action.payload.team
+      const selectSameMatchChanges = state.allMatches.find(
+        (match) => match.matchId === action.payload.matchId && match.team === action.payload.team
       );
       if (selectSameMatchChanges) {
         selectSameMatchChanges.pointsScored = action.payload.pointsScored;
       }
       if (selectSameMatchChanges === undefined) {
-        state.teamMatches.push(action.payload);
+        state.allMatches.push(action.payload);
       }
     },
-    addScores: (state, action: PayloadAction<string>) => {
-      const selectSameTeamNameChanges = state.teamScores.find(
-        (team) => team.team === action.payload
-      );
-      if (selectSameTeamNameChanges) {
-        selectSameTeamNameChanges.team = action.payload;
+    matchResults: (state, action: PayloadAction<MatchResults>) => {
+      const selectSameMatchChanges = state.matchResults.find((match) => match.matchId === action.payload.matchId);
+      const dataToSave = {
+        matchId: action.payload.matchId,
+        results: {
+          team1: {
+            team: action.payload.results.team1.team,
+            played: action.payload.results.team1.played,
+            win: action.payload.results.team1.played,
+            draw: action.payload.results.team1.draw,
+            lost: action.payload.results.team1.lost,
+            points: action.payload.results.team1.points,
+          },
+          team2: {
+            team: action.payload.results.team2.team,
+            played: action.payload.results.team2.played,
+            win: action.payload.results.team2.played,
+            draw: action.payload.results.team2.played,
+            lost: action.payload.results.team2.played,
+            points: action.payload.results.team2.played,
+          },
+        },
+      };
+      if (selectSameMatchChanges) {
+        state.matchResults = [dataToSave];
       }
-      if (selectSameTeamNameChanges === undefined) {
-        state.teamScores.push({
-          team: action.payload,
-          played: 0,
-          win: 0,
-          draw: 0,
-          lost: 0,
-          points: 0,
-        });
-      }
-    },
-    updateScores: (state, action: PayloadAction<string>) => {
-      const selectTeamToUpdate = state.teamScores.find(
-        (item) => item.team === action.payload
-      );
-      if (selectTeamToUpdate) {
-        selectTeamToUpdate.points = selectTeamToUpdate.points + 3;
+      if (selectSameMatchChanges === undefined) {
+        state.matchResults.push(dataToSave);
       }
     },
   },
 });
 
-export const { addTeam, addMatches, addScores, updateScores } =
-  teamSlice.actions;
+export const { addTeam, addMatch, matchResults } = footballScoreSlice.actions;
 
-export default teamSlice.reducer;
+export default footballScoreSlice.reducer;

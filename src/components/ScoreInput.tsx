@@ -1,21 +1,52 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { addMatches, addScores, updateScores } from "../store/teamSlice";
+import { addMatch, matchResults } from "../store/teamSlice";
+import { useEffect } from "react";
 
 export function ScoreInput() {
   const dispatch = useDispatch();
+  const teams = useSelector((state: RootState) => state.addTeam.teams);
+  const allMatches = useSelector((state: RootState) => state.addTeam.allMatches);
+  const matchIds = [...Array.from(new Set(allMatches.map((item) => item.matchId)))];
 
-  const data = useSelector((state: RootState) => state.addTeam.teams);
-  const teamMatches = useSelector(
-    (state: RootState) => state.addTeam.teamMatches
-  );
-  console.log(teamMatches);
+  useEffect(() => {
+    //Checking that a match has both scores entered and only then dispatching results
+    matchIds.forEach((id) => {
+      if (allMatches.filter((item) => item.matchId === id).length === 2) {
+        dispatch(
+          matchResults({
+            matchId: id,
+            results: {
+              team1: {
+                team: "team1",
+                played: 0,
+                win: 0,
+                draw: 0,
+                lost: 0,
+                points: 0,
+              },
+              team2: {
+                team: "team2",
+                played: 0,
+                win: 0,
+                draw: 0,
+                lost: 0,
+                points: 0,
+              },
+            },
+          })
+        );
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, allMatches]);
 
-  const teamsMatched = data.flatMap((team, index) => {
-    return data.slice(index + 1).map((otherTeam) => [team, otherTeam]);
+  //Pairing entered teams to play with each other once
+  const pairedTeams = teams.flatMap((team, index) => {
+    return teams.slice(index + 1).map((otherTeam) => [team, otherTeam]);
   });
 
-  const matchList = teamsMatched.map((item, index) => {
+  const matchList = pairedTeams.map((item, index) => {
     return (
       <div key={index} className="flex">
         <div className="flex gap-4">
@@ -25,19 +56,12 @@ export function ScoreInput() {
             type={"number"}
             onChange={(event) => {
               dispatch(
-                addMatches({
+                addMatch({
                   team: item[0],
-                  pointsScored:
-                    event.target.value === ""
-                      ? 0
-                      : parseInt(event.target.value),
+                  pointsScored: event.target.value === "" ? 0 : parseInt(event.target.value),
                   matchId: index,
                 })
               );
-
-              dispatch(addScores(item[0]));
-
-              dispatch(updateScores(item[0]));
             }}
           ></input>
         </div>
@@ -48,19 +72,12 @@ export function ScoreInput() {
             type={"text"}
             onChange={(event) => {
               dispatch(
-                addMatches({
+                addMatch({
                   team: item[1],
-                  pointsScored:
-                    event.target.value === ""
-                      ? 0
-                      : parseInt(event.target.value),
+                  pointsScored: event.target.value === "" ? 0 : parseInt(event.target.value),
                   matchId: index,
                 })
               );
-
-              dispatch(addScores(item[1]));
-
-              dispatch(updateScores(item[1]));
             }}
           ></input>
           <div>{item[1]}</div>
