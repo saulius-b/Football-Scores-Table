@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { addScores } from "../store/teamSlice";
+import { addMatches, addScores } from "../store/teamSlice";
 
 export function ScoreInput() {
   const dispatch = useDispatch();
 
-  const data = useSelector((state: RootState) => state.addTeam.value);
+  const data = useSelector((state: RootState) => state.addTeam.teams);
 
   const teamsMatched = data.flatMap((team, index) => {
     return data.slice(index + 1).map((otherTeam) => [team, otherTeam]);
@@ -21,7 +21,7 @@ export function ScoreInput() {
             type={"number"}
             onChange={(event) => {
               dispatch(
-                addScores({
+                addMatches({
                   team: item[0],
                   pointsScored:
                     event.target.value === ""
@@ -30,6 +30,7 @@ export function ScoreInput() {
                   matchId: index,
                 })
               );
+              dispatch(addScores(item[0]));
             }}
           ></input>
         </div>
@@ -40,7 +41,7 @@ export function ScoreInput() {
             type={"text"}
             onChange={(event) => {
               dispatch(
-                addScores({
+                addMatches({
                   team: item[1],
                   pointsScored:
                     event.target.value === ""
@@ -49,6 +50,7 @@ export function ScoreInput() {
                   matchId: index,
                 })
               );
+              dispatch(addScores(item[1]));
             }}
           ></input>
           <div>{item[1]}</div>

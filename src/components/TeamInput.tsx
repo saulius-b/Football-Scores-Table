@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import { addTeam } from "../store/teamSlice";
 
 export function TeamInput() {
   const [team, setTeam] = useState("");
   const dispatch = useDispatch();
+  const teams = useSelector((state: RootState) => state.addTeam.teams);
 
   return (
     <div className="p-2">
@@ -17,7 +19,11 @@ export function TeamInput() {
       />
       <button
         className="border border-gray-400 rounded bg-gray-200 px-6 py-1"
-        onClick={() => dispatch(addTeam(team))}
+        onClick={() => {
+          const selectDuplicateTeam = teams.find((item) => item === team);
+          if (selectDuplicateTeam) return;
+          dispatch(addTeam(team));
+        }}
       >
         Add
       </button>

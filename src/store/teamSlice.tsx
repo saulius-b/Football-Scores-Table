@@ -1,18 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface TeamScores {
+interface TeamMatches {
   team: string;
   pointsScored: number;
   matchId: number;
 }
 
+interface TeamScores {
+  place: number;
+  team: string;
+  played: number;
+  win: number;
+  draw: number;
+  lost: number;
+  points: number;
+}
+
 interface TeamState {
-  value: string[];
+  teams: string[];
+  teamMatches: TeamMatches[];
   teamScores: TeamScores[];
 }
 
 const initialState: TeamState = {
-  value: [],
+  teams: [],
+  teamMatches: [],
   teamScores: [],
 };
 
@@ -21,25 +33,44 @@ export const teamSlice = createSlice({
   initialState,
   reducers: {
     addTeam: (state, action: PayloadAction<string>) => {
-      state.value.push(action.payload);
+      state.teams.push(action.payload);
     },
-    addScores: (state, action: PayloadAction<TeamScores>) => {
+    addMatches: (state, action: PayloadAction<TeamMatches>) => {
       //Checking if the same match already had scores entered and updating them (comparing current(store) entries and incoming payload matchId and Team )
-      const matchScoringChanged = state.teamScores.find(
+      const selectSameMatchChanges = state.teamMatches.find(
         (match) =>
           match.matchId === action.payload.matchId &&
           match.team === action.payload.team
       );
-      if (matchScoringChanged) {
-        matchScoringChanged.pointsScored = action.payload.pointsScored;
+      if (selectSameMatchChanges) {
+        selectSameMatchChanges.pointsScored = action.payload.pointsScored;
       }
-      if (matchScoringChanged === undefined) {
-        state.teamScores.push(action.payload);
+      if (selectSameMatchChanges === undefined) {
+        state.teamMatches.push(action.payload);
+      }
+    },
+    addScores: (state, action: PayloadAction<string>) => {
+      const selectSameTeamNameChanges = state.teamScores.find(
+        (team) => team.team === action.payload
+      );
+      if (selectSameTeamNameChanges) {
+        selectSameTeamNameChanges.team = action.payload;
+      }
+      if (selectSameTeamNameChanges === undefined) {
+        state.teamScores.push({
+          place: 0,
+          team: action.payload,
+          played: 0,
+          win: 0,
+          draw: 0,
+          lost: 0,
+          points: 0,
+        });
       }
     },
   },
 });
 
-export const { addTeam, addScores } = teamSlice.actions;
+export const { addTeam, addMatches, addScores } = teamSlice.actions;
 
 export default teamSlice.reducer;
