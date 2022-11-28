@@ -23,6 +23,7 @@ export function TeamInput() {
           const selectDuplicateTeam = teams.find((item) => item === team);
           if (selectDuplicateTeam) return;
           dispatch(addTeam(team));
+          setTeam("");
         }}
       >
         Add
