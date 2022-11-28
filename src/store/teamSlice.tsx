@@ -1,33 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface AllMatches {
-  team: string;
-  pointsScored: number;
-  matchId: number;
-}
-
-interface TeamScores {
-  team: string;
-  played: number;
-  win: number;
-  draw: number;
-  lost: number;
-  points: number;
-}
-
-interface MatchResults {
-  matchId: number;
-  results: {
-    team1: TeamScores;
-    team2: TeamScores;
-  };
-}
-
-interface TeamState {
-  teams: string[];
-  allMatches: AllMatches[];
-  matchResults: MatchResults[];
-}
+import { AllMatches, MatchResults, TeamState } from "../types";
 
 const initialState: TeamState = {
   teams: [],

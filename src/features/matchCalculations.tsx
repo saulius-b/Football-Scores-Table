@@ -1,4 +1,4 @@
-import { AllMatches } from "../store/teamSlice";
+import { AllMatches } from "../types";
 
 export function Team1Won(id: number, match: AllMatches[]) {
   const result = {
