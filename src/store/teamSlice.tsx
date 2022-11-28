@@ -7,7 +7,6 @@ interface TeamMatches {
 }
 
 interface TeamScores {
-  place: number;
   team: string;
   played: number;
   win: number;
@@ -58,7 +57,6 @@ export const teamSlice = createSlice({
       }
       if (selectSameTeamNameChanges === undefined) {
         state.teamScores.push({
-          place: 0,
           team: action.payload,
           played: 0,
           win: 0,
@@ -68,9 +66,18 @@ export const teamSlice = createSlice({
         });
       }
     },
+    updateScores: (state, action: PayloadAction<string>) => {
+      const selectTeamToUpdate = state.teamScores.find(
+        (item) => item.team === action.payload
+      );
+      if (selectTeamToUpdate) {
+        selectTeamToUpdate.points = selectTeamToUpdate.points + 3;
+      }
+    },
   },
 });
 
-export const { addTeam, addMatches, addScores } = teamSlice.actions;
+export const { addTeam, addMatches, addScores, updateScores } =
+  teamSlice.actions;
 
 export default teamSlice.reducer;
