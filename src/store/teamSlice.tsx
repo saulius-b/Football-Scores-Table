@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface AllMatches {
+export interface AllMatches {
   team: string;
   pointsScored: number;
   matchId: number;
@@ -62,7 +62,7 @@ export const footballScoreSlice = createSlice({
           team1: {
             team: action.payload.results.team1.team,
             played: action.payload.results.team1.played,
-            win: action.payload.results.team1.played,
+            win: action.payload.results.team1.win,
             draw: action.payload.results.team1.draw,
             lost: action.payload.results.team1.lost,
             points: action.payload.results.team1.points,
@@ -70,16 +70,18 @@ export const footballScoreSlice = createSlice({
           team2: {
             team: action.payload.results.team2.team,
             played: action.payload.results.team2.played,
-            win: action.payload.results.team2.played,
-            draw: action.payload.results.team2.played,
-            lost: action.payload.results.team2.played,
-            points: action.payload.results.team2.played,
+            win: action.payload.results.team2.win,
+            draw: action.payload.results.team2.draw,
+            lost: action.payload.results.team2.lost,
+            points: action.payload.results.team2.points,
           },
         },
       };
+      //Overwriting same match results if that match results changed
       if (selectSameMatchChanges) {
         state.matchResults = [dataToSave];
       }
+      //Entering new match results
       if (selectSameMatchChanges === undefined) {
         state.matchResults.push(dataToSave);
       }

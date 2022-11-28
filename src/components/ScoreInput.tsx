@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { addMatch, matchResults } from "../store/teamSlice";
 import { useEffect } from "react";
+import { Draw, Team1Won, Team2Won } from "../features/matchCalculations";
 
 export function ScoreInput() {
   const dispatch = useDispatch();
@@ -10,32 +11,27 @@ export function ScoreInput() {
   const matchIds = [...Array.from(new Set(allMatches.map((item) => item.matchId)))];
 
   useEffect(() => {
-    //Checking that a match has both scores entered and only then dispatching results
+    //Checking that a match has both scores(2) entered and only then dispatching results
     matchIds.forEach((id) => {
       if (allMatches.filter((item) => item.matchId === id).length === 2) {
-        dispatch(
-          matchResults({
-            matchId: id,
-            results: {
-              team1: {
-                team: "team1",
-                played: 0,
-                win: 0,
-                draw: 0,
-                lost: 0,
-                points: 0,
-              },
-              team2: {
-                team: "team2",
-                played: 0,
-                win: 0,
-                draw: 0,
-                lost: 0,
-                points: 0,
-              },
-            },
-          })
-        );
+        //
+        //finding both objects(results of both teams) of the same match
+        const match = allMatches.filter((item) => item.matchId === id);
+
+        //Points to add if team1 won
+        if (match[0].pointsScored > match[1].pointsScored) {
+          dispatch(matchResults(Team1Won(id, match)));
+        }
+
+        //Points to add if both teams scored equally
+        if (match[0].pointsScored === match[1].pointsScored) {
+          dispatch(matchResults(Draw(id, match)));
+        }
+
+        //Points to add if team2 won
+        if (match[0].pointsScored < match[1].pointsScored) {
+          dispatch(matchResults(Team2Won(id, match)));
+        }
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
