@@ -11,8 +11,8 @@ export function ScoreInput() {
   const matchIds = [...Array.from(new Set(allMatches.map((item) => item.matchId)))];
 
   useEffect(() => {
-    //Checking that a match has both scores(2) entered and only then dispatching results
     matchIds.forEach((id) => {
+      //Checking that a match has both scores(2) entered and only then dispatching results
       if (allMatches.filter((item) => item.matchId === id).length === 2) {
         //
         //finding both objects(results of both teams) of the same match
@@ -65,7 +65,7 @@ export function ScoreInput() {
         <div className="flex gap-4">
           <input
             className="border border-gray-400 rounded w-6 text-center"
-            type={"text"}
+            type={"number"}
             onChange={(event) => {
               dispatch(
                 addMatch({

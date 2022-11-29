@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { addTeam } from "../store/teamSlice";
@@ -20,6 +20,7 @@ export function TeamInput() {
       <button
         className="border border-gray-400 rounded bg-gray-200 px-6 py-1"
         onClick={() => {
+          //Validating if team was already entered
           const selectDuplicateTeam = teams.find((item) => item === team);
           if (selectDuplicateTeam) return;
           dispatch(addTeam(team));
