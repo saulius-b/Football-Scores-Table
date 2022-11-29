@@ -27,35 +27,52 @@ export const footballScoreSlice = createSlice({
       }
     },
     matchResults: (state, action: PayloadAction<MatchResults>) => {
-      const selectSameMatchChanges = state.matchResults.find((match) => match.matchId === action.payload.matchId);
-      const dataToSave = {
-        matchId: action.payload.matchId,
-        results: {
-          team1: {
-            team: action.payload.results.team1.team,
-            played: action.payload.results.team1.played,
-            win: action.payload.results.team1.win,
-            draw: action.payload.results.team1.draw,
-            lost: action.payload.results.team1.lost,
-            points: action.payload.results.team1.points,
-          },
-          team2: {
-            team: action.payload.results.team2.team,
-            played: action.payload.results.team2.played,
-            win: action.payload.results.team2.win,
-            draw: action.payload.results.team2.draw,
-            lost: action.payload.results.team2.lost,
-            points: action.payload.results.team2.points,
-          },
-        },
+      const selectExistingTeam1Match = state.matchResults.find(
+        (match) => match.matchId === action.payload.team1.matchId && match.team === action.payload.team1.team
+      );
+      const selectExistingTeam2Match = state.matchResults.find(
+        (match) => match.matchId === action.payload.team2.matchId && match.team === action.payload.team2.team
+      );
+      const team1 = {
+        team: action.payload.team1.team,
+        played: action.payload.team1.played,
+        win: action.payload.team1.win,
+        draw: action.payload.team1.draw,
+        lost: action.payload.team1.lost,
+        points: action.payload.team1.points,
+        matchId: action.payload.team1.matchId,
       };
+      const team2 = {
+        team: action.payload.team2.team,
+        played: action.payload.team2.played,
+        win: action.payload.team2.win,
+        draw: action.payload.team2.draw,
+        lost: action.payload.team2.lost,
+        points: action.payload.team2.points,
+        matchId: action.payload.team2.matchId,
+      };
+
       //Overwriting same match results if that match results changed
-      if (selectSameMatchChanges) {
-        state.matchResults = [dataToSave];
+      if (selectExistingTeam1Match) {
+        selectExistingTeam1Match.played = team1.played;
+        selectExistingTeam1Match.win = team1.win;
+        selectExistingTeam1Match.draw = team1.draw;
+        selectExistingTeam1Match.lost = team1.lost;
+        selectExistingTeam1Match.points = team1.points;
+      }
+      if (selectExistingTeam2Match) {
+        selectExistingTeam2Match.played = team2.played;
+        selectExistingTeam2Match.win = team2.win;
+        selectExistingTeam2Match.draw = team2.draw;
+        selectExistingTeam2Match.lost = team2.lost;
+        selectExistingTeam2Match.points = team2.points;
       }
       //Entering new match results
-      if (selectSameMatchChanges === undefined) {
-        state.matchResults.push(dataToSave);
+      if (selectExistingTeam1Match === undefined) {
+        state.matchResults.push(team1);
+      }
+      if (selectExistingTeam2Match === undefined) {
+        state.matchResults.push(team2);
       }
     },
   },

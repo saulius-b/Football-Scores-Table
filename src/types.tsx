@@ -11,18 +11,16 @@ export interface TeamScores {
   draw: number;
   lost: number;
   points: number;
+  matchId?: number;
 }
 
 export interface MatchResults {
-  matchId: number;
-  results: {
-    team1: TeamScores;
-    team2: TeamScores;
-  };
+  team1: TeamScores;
+  team2: TeamScores;
 }
 
 export interface TeamState {
   teams: string[];
   allMatches: AllMatches[];
-  matchResults: MatchResults[];
+  matchResults: TeamScores[];
 }
