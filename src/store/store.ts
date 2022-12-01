@@ -3,7 +3,7 @@ import addTeamReducer from "./teamSlice";
 
 export const store = configureStore({
   reducer: {
-    addTeam: addTeamReducer,
+    footballScoreSlice: addTeamReducer,
   },
 });
 

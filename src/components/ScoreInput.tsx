@@ -6,8 +6,8 @@ import { Draw, Team1Won, Team2Won } from "../features/matchCalculations";
 
 export function ScoreInput() {
   const dispatch = useDispatch();
-  const teams = useSelector((state: RootState) => state.addTeam.teams);
-  const allMatches = useSelector((state: RootState) => state.addTeam.allMatches);
+  const teams = useSelector((state: RootState) => state.footballScoreSlice.teams);
+  const allMatches = useSelector((state: RootState) => state.footballScoreSlice.allMatches);
   const matchIds = [...Array.from(new Set(allMatches.map((item) => item.matchId)))];
 
   useEffect(() => {

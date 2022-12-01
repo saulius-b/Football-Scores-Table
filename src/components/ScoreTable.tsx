@@ -4,7 +4,7 @@ import { RootState } from "../store/store";
 
 export function ScoreTable() {
   const headersText: string[] = ["Place", "Team", "Played", "Win", "Draw", "Lost", "Points"];
-  const allMatchResults = useSelector((state: RootState) => state.addTeam.matchResults);
+  const allMatchResults = useSelector((state: RootState) => state.footballScoreSlice.matchResults);
   const tableData = ScoreTableCalculations(allMatchResults);
 
   const tableHeader = headersText.map((item, index) => {
