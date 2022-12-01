@@ -3,6 +3,7 @@ import { AllMatches, MatchResults, TeamState } from "../types";
 
 const initialState: TeamState = {
   teams: [],
+  pairedTeams: [],
   allMatches: [],
   matchResults: [],
 };
@@ -16,6 +17,32 @@ export const footballScoreSlice = createSlice({
       if (selectDuplicateTeam) return;
       if (action.payload === "") return;
       state.teams.push(action.payload);
+    },
+    createPairs: (state) => {
+      const teams = state.teams;
+
+      const pairedTeams = teams.flatMap((team, index) => {
+        return teams.slice(index + 1).map((otherTeam) => [team, otherTeam]);
+      });
+
+      state.pairedTeams = pairedTeams;
+
+      // const firstTeam = teams[0];
+      // const otherTeamsToPlayWith = teams.slice(0, -1);
+      // const teamPairs: string[][] = [];
+      // otherTeamsToPlayWith.forEach((item) => {
+      //   teamPairs.push([firstTeam, item]);
+      // });
+      // state.pairedTeams.push(teamPairs.flat(1));
+
+      // const addedTeamMatches: string[][] = [];
+      // const lastAddedTeam = [teams.length - 1];
+
+      // otherTeamsToPlayWith.forEach((item) => {
+      //   addedTeamMatches.push([item, lastAddedTeam]);
+      // });
+
+      // const pairedTeams = teams.concat(addedTeamMatches);
     },
     addMatch: (state, action: PayloadAction<AllMatches>) => {
       //Checking if the same match already had scores entered and updating them (comparing current(store) entries and incoming payload matchId and Team )
@@ -81,6 +108,6 @@ export const footballScoreSlice = createSlice({
   },
 });
 
-export const { addTeam, addMatch, matchResults } = footballScoreSlice.actions;
+export const { addTeam, createPairs, addMatch, matchResults } = footballScoreSlice.actions;
 
 export default footballScoreSlice.reducer;

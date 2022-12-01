@@ -6,7 +6,7 @@ import { Draw, Team1Won, Team2Won } from "../features/matchCalculations";
 
 export function ScoreInput() {
   const dispatch = useDispatch();
-  const teams = useSelector((state: RootState) => state.football.teams);
+  const pairedTeams = useSelector((state: RootState) => state.football.pairedTeams);
   const allMatches = useSelector((state: RootState) => state.football.allMatches);
   const matchIds = [...Array.from(new Set(allMatches.map((item) => item.matchId)))];
 
@@ -36,11 +36,6 @@ export function ScoreInput() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, allMatches]);
-
-  //Pairing entered teams to play with each other once
-  const pairedTeams = teams.flatMap((team, index) => {
-    return teams.slice(index + 1).map((otherTeam) => [team, otherTeam]);
-  });
 
   const matchList = pairedTeams.map((item, index) => {
     return (

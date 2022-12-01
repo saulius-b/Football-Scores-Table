@@ -21,6 +21,7 @@ export interface MatchResults {
 
 export interface TeamState {
   teams: string[];
+  pairedTeams: string[][];
   allMatches: AllMatches[];
   matchResults: TeamScores[];
 }
