@@ -12,6 +12,9 @@ export const footballScoreSlice = createSlice({
   initialState,
   reducers: {
     addTeam: (state, action: PayloadAction<string>) => {
+      const selectDuplicateTeam = state.teams.find((item) => item === action.payload);
+      if (selectDuplicateTeam) return;
+      if (action.payload === "") return;
       state.teams.push(action.payload);
     },
     addMatch: (state, action: PayloadAction<AllMatches>) => {
