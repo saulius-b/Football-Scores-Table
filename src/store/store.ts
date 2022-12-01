@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import addTeamReducer from "./teamSlice";
+import addTeamReducer from "./footballSlice";
 
 export const store = configureStore({
   reducer: {

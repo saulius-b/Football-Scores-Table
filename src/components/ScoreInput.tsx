@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { addMatch, matchResults } from "../store/teamSlice";
+import { addMatch, matchResults } from "../store/footballSlice";
 import { useEffect } from "react";
 import { Draw, Team1Won, Team2Won } from "../features/matchCalculations";
 

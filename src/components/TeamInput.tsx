@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { addTeam } from "../store/teamSlice";
+import { addTeam } from "../store/footballSlice";
 
 export function TeamInput() {
   const [team, setTeam] = useState("");
