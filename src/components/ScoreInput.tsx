@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { addMatch, matchResults } from "../store/footballSlice";
+import { matchResults } from "../store/footballSlice";
 import { useEffect } from "react";
 import { Draw, Team1Won, Team2Won } from "../features/matchCalculations";
+
+import { ScoreInputRow } from "./ScoreInputRow";
 
 export function ScoreInput() {
   const dispatch = useDispatch();
@@ -37,45 +39,23 @@ export function ScoreInput() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, allMatches]);
 
-  const matchList = pairedTeams.map((item, index) => {
-    return (
-      <div key={index} className="flex justify-center">
-        <div className="flex w-24 gap-2 justify-end">
-          <div>{item[0]}</div>
-          <input
-            className="border border-gray-400 rounded w-4 text-center"
-            type={"number"}
-            onChange={(event) => {
-              dispatch(
-                addMatch({
-                  team: item[0],
-                  pointsScored: event.target.value === "" ? 0 : parseInt(event.target.value),
-                  matchId: index,
-                })
-              );
-            }}
-          ></input>
-        </div>
-        <div className="px-1">:</div>
-        <div className="flex w-24 gap-2 justify-start">
-          <input
-            className="border border-gray-400 rounded w-4 text-center"
-            type={"number"}
-            onChange={(event) => {
-              dispatch(
-                addMatch({
-                  team: item[1],
-                  pointsScored: event.target.value === "" ? 0 : parseInt(event.target.value),
-                  matchId: index,
-                })
-              );
-            }}
-          ></input>
-          <div>{item[1]}</div>
-        </div>
-      </div>
-    );
-  });
+  return (
+    <div className="flex flex-col gap-1">
+      {pairedTeams.map((item, index) => {
+        const scores = allMatches.filter((match) => match.matchId === index);
+        const team1Score = scores.filter((team) => team.team === item[0]).map((x) => x.pointsScored);
+        const team2Score = scores.filter((team) => team.team === item[1]).map((x) => x.pointsScored);
 
-  return <div className="flex flex-col gap-1">{matchList}</div>;
+        return (
+          <ScoreInputRow
+            key={index}
+            item={item}
+            index={index}
+            team1Score={team1Score.length > 0 ? team1Score : undefined}
+            team2Score={team2Score.length > 0 ? team2Score : undefined}
+          ></ScoreInputRow>
+        );
+      })}
+    </div>
+  );
 }
