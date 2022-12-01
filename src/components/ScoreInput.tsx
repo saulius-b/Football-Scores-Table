@@ -44,11 +44,11 @@ export function ScoreInput() {
 
   const matchList = pairedTeams.map((item, index) => {
     return (
-      <div key={index} className="flex">
-        <div className="flex gap-4">
+      <div key={index} className="flex justify-center">
+        <div className="flex w-24 gap-2 justify-end">
           <div>{item[0]}</div>
           <input
-            className="border border-gray-400 rounded w-6 text-center"
+            className="border border-gray-400 rounded w-4 text-center"
             type={"number"}
             onChange={(event) => {
               dispatch(
@@ -62,9 +62,9 @@ export function ScoreInput() {
           ></input>
         </div>
         <div className="px-1">:</div>
-        <div className="flex gap-4">
+        <div className="flex w-24 gap-2 justify-start">
           <input
-            className="border border-gray-400 rounded w-6 text-center"
+            className="border border-gray-400 rounded w-4 text-center"
             type={"number"}
             onChange={(event) => {
               dispatch(
