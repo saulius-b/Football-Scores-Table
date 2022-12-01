@@ -6,8 +6,8 @@ import { addTeam } from "../store/teamSlice";
 export function TeamInput() {
   const [team, setTeam] = useState("");
   const dispatch = useDispatch();
-  const teams = useSelector((state: RootState) => state.footballScoreSlice.teams);
-  const allMatches = useSelector((state: RootState) => state.footballScoreSlice.allMatches);
+  const teams = useSelector((state: RootState) => state.football.teams);
+  const allMatches = useSelector((state: RootState) => state.football.allMatches);
 
   return (
     <div className="p-2">
