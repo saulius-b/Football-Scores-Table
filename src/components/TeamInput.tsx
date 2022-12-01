@@ -7,6 +7,7 @@ export function TeamInput() {
   const [team, setTeam] = useState("");
   const dispatch = useDispatch();
   const teams = useSelector((state: RootState) => state.addTeam.teams);
+  const allMatches = useSelector((state: RootState) => state.addTeam.allMatches);
 
   return (
     <div className="p-2">
@@ -18,7 +19,8 @@ export function TeamInput() {
         onChange={(e) => setTeam(e.target.value)}
       />
       <button
-        className="border border-gray-400 rounded bg-gray-200 px-6 py-1"
+        className="border border-gray-400 rounded bg-gray-200 px-6 py-1 disabled:opacity-50 disabled:bg-red-100"
+        disabled={allMatches.length > 0 ? true : false}
         onClick={() => {
           //Validating if team was already entered
           const selectDuplicateTeam = teams.find((item) => item === team);
