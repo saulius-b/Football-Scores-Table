@@ -13,36 +13,23 @@ export const footballScoreSlice = createSlice({
   initialState,
   reducers: {
     addTeam: (state, action: PayloadAction<string>) => {
-      const selectDuplicateTeam = state.teams.find((item) => item === action.payload);
-      if (selectDuplicateTeam) return;
       if (action.payload === "") return;
       state.teams.push(action.payload);
     },
     createPairs: (state) => {
       const teams = state.teams;
 
-      const pairedTeams = teams.flatMap((team, index) => {
-        return teams.slice(index + 1).map((otherTeam) => [team, otherTeam]);
-      });
+      if (teams.length === 2) {
+        state.pairedTeams.push([teams[0], teams[1]]);
+      }
+      if (teams.length > 2) {
+        const lastAddedTeam = teams[teams.length - 1];
+        const otherTeamsToPlayWith = teams.slice(0, -1);
 
-      state.pairedTeams = pairedTeams;
-
-      // const firstTeam = teams[0];
-      // const otherTeamsToPlayWith = teams.slice(0, -1);
-      // const teamPairs: string[][] = [];
-      // otherTeamsToPlayWith.forEach((item) => {
-      //   teamPairs.push([firstTeam, item]);
-      // });
-      // state.pairedTeams.push(teamPairs.flat(1));
-
-      // const addedTeamMatches: string[][] = [];
-      // const lastAddedTeam = [teams.length - 1];
-
-      // otherTeamsToPlayWith.forEach((item) => {
-      //   addedTeamMatches.push([item, lastAddedTeam]);
-      // });
-
-      // const pairedTeams = teams.concat(addedTeamMatches);
+        otherTeamsToPlayWith.forEach((item) => {
+          state.pairedTeams.push([lastAddedTeam, item]);
+        });
+      }
     },
     addMatch: (state, action: PayloadAction<AllMatches>) => {
       //Checking if the same match already had scores entered and updating them (comparing current(store) entries and incoming payload matchId and Team )

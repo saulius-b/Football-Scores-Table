@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
+
 import { addTeam, createPairs } from "../store/footballSlice";
+import { RootState } from "../store/store";
 
 export function TeamInput() {
   const [team, setTeam] = useState("");
   const dispatch = useDispatch();
-  const allMatches = useSelector((state: RootState) => state.football.allMatches);
+  const teams = useSelector((state: RootState) => state.football.teams);
+  const duplicateTeam = teams.find((item) => item === team);
 
   return (
     <div className="p-2">
@@ -19,8 +21,8 @@ export function TeamInput() {
       />
       <button
         className="border border-gray-400 rounded bg-gray-200 px-6 py-1 disabled:opacity-50 disabled:bg-red-100"
-        disabled={allMatches.length > 0 ? true : false}
         onClick={() => {
+          if (duplicateTeam) return;
           dispatch(addTeam(team));
           dispatch(createPairs());
           setTeam("");
