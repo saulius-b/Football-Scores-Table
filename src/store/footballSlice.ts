@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AllMatches, MatchResults, TeamState } from "../types";
+import * as Lodash from "lodash";
 
 const initialState: TeamState = {
   teams: [],
@@ -13,14 +14,17 @@ export const footballScoreSlice = createSlice({
   initialState,
   reducers: {
     addTeam: (state, action: PayloadAction<string>) => {
+      const selectDuplicateTeam = state.teams.find((item) => item === action.payload);
+      if (selectDuplicateTeam) return;
       if (action.payload === "") return;
+
       state.teams.push(action.payload);
     },
-    createPairs: (state) => {
+    createPairs: (state, action: PayloadAction<string>) => {
       const teams = state.teams;
 
       if (teams.length === 2) {
-        state.pairedTeams.push([teams[0], teams[1]]);
+        state.pairedTeams = [[teams[0], teams[1]]];
       }
       if (teams.length > 2) {
         const lastAddedTeam = teams[teams.length - 1];

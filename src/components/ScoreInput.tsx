@@ -42,6 +42,7 @@ export function ScoreInput() {
   return (
     <div className="flex flex-col gap-1">
       {pairedTeams.map((item, index) => {
+        //Finding only the scores that already exist before rendering and only passing them
         const scores = allMatches.filter((match) => match.matchId === index);
         const team1Score = scores.filter((team) => team.team === item[0]).map((x) => x.pointsScored);
         const team2Score = scores.filter((team) => team.team === item[1]).map((x) => x.pointsScored);

@@ -13,7 +13,7 @@ export function TeamInput() {
   function handleClick() {
     if (duplicateTeam) return;
     dispatch(addTeam(team));
-    dispatch(createPairs());
+    dispatch(createPairs(team));
     setTeam("");
   }
 
@@ -27,7 +27,8 @@ export function TeamInput() {
         onChange={(e) => setTeam(e.target.value)}
       />
       <button
-        className="border border-gray-400 rounded bg-gray-200 px-6 py-1 disabled:opacity-50 disabled:bg-red-100"
+        className="border border-gray-400 rounded bg-gray-200 px-6 py-1 disabled:opacity-40"
+        disabled={team === "" ? true : false}
         onClick={() => handleClick()}
       >
         Add
