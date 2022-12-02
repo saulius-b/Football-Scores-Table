@@ -1,4 +1,6 @@
 # Football match calculator
+![image](https://user-images.githubusercontent.com/67793926/205253888-19e65376-3969-46f5-b832-dccee50b9e0e.png)
+
 
 
 ## How to run
