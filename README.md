@@ -10,7 +10,7 @@ In the project directory, you can run:
 
 
 
-### `General overview`
+## `General overview`
 
 * The user can add teams and scores. 
 * Once there are atleast two teams, they are rendered into a pair. Each other team will be paired and added to the list instantly. 
