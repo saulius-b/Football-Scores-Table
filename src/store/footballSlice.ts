@@ -21,11 +21,12 @@ export const footballScoreSlice = createSlice({
     },
     createPairs: (state) => {
       const teams = state.teams;
+      const oneTeamPairLength = 2;
 
-      if (teams.length === 2) {
+      if (teams.length === oneTeamPairLength) {
         state.pairedTeams = [[teams[0], teams[1]]];
       }
-      if (teams.length > 2) {
+      if (teams.length > oneTeamPairLength) {
         const lastAddedTeam = teams[teams.length - 1];
         const otherTeamsToPlayWith = teams.slice(0, -1);
 
