@@ -13,7 +13,7 @@ export function TeamInput() {
   function handleClick() {
     if (duplicateTeam) return;
     dispatch(addTeam(team));
-    dispatch(createPairs(team));
+    dispatch(createPairs());
     setTeam("");
   }
 

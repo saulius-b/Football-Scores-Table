@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AllMatches, MatchResults, TeamState } from "../types";
-import * as Lodash from "lodash";
 
 const initialState: TeamState = {
   teams: [],
@@ -20,7 +19,7 @@ export const footballScoreSlice = createSlice({
 
       state.teams.push(action.payload);
     },
-    createPairs: (state, action: PayloadAction<string>) => {
+    createPairs: (state) => {
       const teams = state.teams;
 
       if (teams.length === 2) {
