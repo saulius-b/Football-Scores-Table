@@ -3,6 +3,7 @@ import { AllMatches, MatchResults, TeamState } from "../types";
 
 const initialState: TeamState = {
   teams: [],
+  pairedTeams: [],
   allMatches: [],
   matchResults: [],
 };
@@ -15,7 +16,23 @@ export const footballScoreSlice = createSlice({
       const selectDuplicateTeam = state.teams.find((item) => item === action.payload);
       if (selectDuplicateTeam) return;
       if (action.payload === "") return;
+
       state.teams.push(action.payload);
+    },
+    createPairs: (state) => {
+      const teams = state.teams;
+
+      if (teams.length === 2) {
+        state.pairedTeams = [[teams[0], teams[1]]];
+      }
+      if (teams.length > 2) {
+        const lastAddedTeam = teams[teams.length - 1];
+        const otherTeamsToPlayWith = teams.slice(0, -1);
+
+        otherTeamsToPlayWith.forEach((item) => {
+          state.pairedTeams.push([lastAddedTeam, item]);
+        });
+      }
     },
     addMatch: (state, action: PayloadAction<AllMatches>) => {
       //Checking if the same match already had scores entered and updating them (comparing current(store) entries and incoming payload matchId and Team )
@@ -81,6 +98,6 @@ export const footballScoreSlice = createSlice({
   },
 });
 
-export const { addTeam, addMatch, matchResults } = footballScoreSlice.actions;
+export const { addTeam, createPairs, addMatch, matchResults } = footballScoreSlice.actions;
 
 export default footballScoreSlice.reducer;
