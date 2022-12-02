@@ -5,8 +5,12 @@ import { addMatch } from "../store/footballSlice";
 export function ScoreInputRow(props: { item: string[]; index: number; team1Score?: number[]; team2Score?: number[] }) {
   const dispatch = useDispatch();
 
-  const [team1Value, setTeam1Value] = useState<number>(props.team1Score === undefined ? 0 : props.team1Score[0]);
-  const [team2Value, setTeam2Value] = useState<number>(props.team2Score === undefined ? 0 : props.team2Score[0]);
+  const [team1Value, setTeam1Value] = useState<number | null>(
+    props.team1Score === undefined ? null : props.team1Score[0]
+  );
+  const [team2Value, setTeam2Value] = useState<number | null>(
+    props.team2Score === undefined ? null : props.team2Score[0]
+  );
 
   function handleTeam1Change(event: React.ChangeEvent<HTMLInputElement>) {
     setTeam1Value(parseInt(event.target.value));
@@ -35,8 +39,8 @@ export function ScoreInputRow(props: { item: string[]; index: number; team1Score
         <div>{props.item[0]}</div>
         <input
           className="border border-gray-400 rounded w-4 text-center"
-          type={"number"}
-          defaultValue={team1Value}
+          type={"integer"}
+          defaultValue={team1Value!}
           onChange={(event) => {
             handleTeam1Change(event);
           }}
@@ -47,7 +51,7 @@ export function ScoreInputRow(props: { item: string[]; index: number; team1Score
         <input
           className="border border-gray-400 rounded w-4 text-center"
           type={"number"}
-          defaultValue={team2Value}
+          defaultValue={team2Value!}
           onChange={(event) => {
             handleTeam2Change(event);
           }}
