@@ -10,6 +10,13 @@ export function TeamInput() {
   const teams = useSelector((state: RootState) => state.football.teams);
   const duplicateTeam = teams.find((item) => item === team);
 
+  function handleClick() {
+    if (duplicateTeam) return;
+    dispatch(addTeam(team));
+    dispatch(createPairs());
+    setTeam("");
+  }
+
   return (
     <div className="p-2">
       <input
@@ -21,12 +28,7 @@ export function TeamInput() {
       />
       <button
         className="border border-gray-400 rounded bg-gray-200 px-6 py-1 disabled:opacity-50 disabled:bg-red-100"
-        onClick={() => {
-          if (duplicateTeam) return;
-          dispatch(addTeam(team));
-          dispatch(createPairs());
-          setTeam("");
-        }}
+        onClick={() => handleClick()}
       >
         Add
       </button>
